@@ -16,14 +16,12 @@ def calculate_fine(late_days, book_type="standard", premium=False):
         print("Invalid book type!")
         return None
 
-    # Apply 20% discount for premium members
     if premium:
         fine = fine * 0.80
 
     return fine
 
 
-# Test cases
 print(calculate_fine(3))
 print(calculate_fine(8))
 print(calculate_fine(4, "reference"))
