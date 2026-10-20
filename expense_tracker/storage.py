@@ -5,9 +5,9 @@ FILE_NAME = "expenses.csv"
 
 
 def save_expenses(expenses):
-    """Save all expenses to a CSV file."""
+    # Save all expenses to a CSV file.
 
-    with open(FILE_NAME, "w", newline="", encoding="utf-8") as file:
+    with open(FILE_NAME, "w", newline="") as file:
         writer = csv.DictWriter(
             file,
             fieldnames=["Item", "Amount"]
@@ -25,7 +25,7 @@ def save_expenses(expenses):
 
 
 def load_expenses():
-    """Load expenses from CSV and return a list of tuples."""
+    # Load expenses from CSV and return a list of tuples
 
     try:
         with open(FILE_NAME, "r", newline="", encoding="utf-8") as file:
