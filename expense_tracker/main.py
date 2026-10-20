@@ -6,7 +6,7 @@ def main():
     # Load previously saved expenses
     expenses = load_expenses()
 
-    print("=== EXPENSE TRACKER ===")
+    print("EXPENSE TRACKER ")
     print(f"Previously saved expenses: {len(expenses)}")
 
     # Ask the user to enter three new expenses
@@ -37,7 +37,7 @@ def main():
     save_expenses(expenses)
 
     # Display reports
-    print("\n=== EXPENSE REPORT ===")
+    print("\n EXPENSE REPORT ")
 
     print(f"Total expenses: ₹{total_spent(expenses)}")
 
