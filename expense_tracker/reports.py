@@ -1,5 +1,5 @@
 def total_spent(expenses):
-    """Return the total amount spent."""
+    """List mein saare expenses ke amounts ka sum return karta hai."""
 
     total = 0
 
@@ -10,14 +10,17 @@ def total_spent(expenses):
 
 
 def biggest_expense(expenses):
-    """Return the tuple with the highest amount."""
+    """Sabse zyada amount wala (item, amount) tuple return karta hai.
+
+    sorted() ke saath lambda key use karke amount nikaala gaya hai.
+    List khaali ho to None return karta hai.
+    """
 
     if not expenses:
         return None
 
-    sorted_expenses = sorted(
-        expenses,
-        key=lambda expense: expense[1]
-    )
+    # lambda expense: expense[1]  ->  tuple ka amount
+    sorted_expenses = sorted(expenses, key=lambda expense: expense[1])
 
+    # Sort ke baad sabse last wala sabse bada hota hai
     return sorted_expenses[-1]
