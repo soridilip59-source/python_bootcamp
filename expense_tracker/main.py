@@ -2,20 +2,22 @@ from storage import save_expenses, load_expenses
 from reports import total_spent, biggest_expense
 
 
-def main():
-    # Load previously saved expenses
-    expenses = load_expenses()
+def get_item_name():
+    """Tab tak poochta hai jab tak item ka naam khaali na ho."""
 
-    print("EXPENSE TRACKER ")
-    print(f"Previously saved expenses: {len(expenses)}")
-
-    # Ask the user to enter three new expenses
-    for i in range(1, 4):
-        print(f"\nEnter expense {i}")
-
+    while True:
         item = input("Enter item name: ").strip()
 
-        # Keep asking until a valid amount is entered
+        if item:
+            return item
+
+        print("Item name khaali nahi ho sakta. Dobara try karo.")
+
+
+def get_valid_amount():
+    """Tab tak poochta hai jab tak sahi (positive) amount na mile."""
+
+    while True:
         amount_input = input("Enter amount (₹): ").strip()
 
         try:
@@ -24,21 +26,34 @@ def main():
             if amount <= 0:
                 raise ValueError
 
+            return amount
+
         except ValueError:
-            print("Invalid amount. This expense will be skipped.")
-            continue
+            print("Invalid amount. Please enter a positive number.")
 
-        # Add the valid expense to the existing list
+
+def main():
+    # Purane saved expenses load karo
+    expenses = load_expenses()
+
+    print("EXPENSE TRACKER")
+    print(f"Previously saved expenses: {len(expenses)}")
+
+    # 3 naye expenses lo
+    for i in range(1, 4):
+        print(f"\nEnter expense {i}")
+
+        item = get_item_name()
+        amount = get_valid_amount()
+
         expenses.append((item, amount))
-
         print("Expense added successfully!")
 
-    # Save the entire list, including old and new expenses
+    # Purane + naye, sab save karo
     save_expenses(expenses)
 
-    # Display reports
-    print("\n EXPENSE REPORT ")
-
+    # Report dikhao
+    print("\nEXPENSE REPORT")
     print(f"Total expenses: ₹{total_spent(expenses)}")
 
     biggest = biggest_expense(expenses)
