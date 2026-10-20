@@ -2,57 +2,38 @@ from storage import save_expenses, load_expenses
 from reports import total_spent, biggest_expense
 
 
-def get_item_name():
-    """Tab tak poochta hai jab tak item ka naam khaali na ho."""
+def main():
+    # 1. Purane expenses file se load karo
+    expenses = load_expenses()
 
-    while True:
+    print("EXPENSE TRACKER")
+    print(f"Previously saved expenses: {len(expenses)}")
+
+    # 2. User se 3 naye items aur amounts lo
+    for i in range(1, 4):
+        print(f"\nEnter expense {i}")
+
         item = input("Enter item name: ").strip()
-
-        if item:
-            return item
-
-        print("Item name khaali nahi ho sakta. Dobara try karo.")
-
-
-def get_valid_amount():
-    """Tab tak poochta hai jab tak sahi (positive) amount na mile."""
-
-    while True:
         amount_input = input("Enter amount (₹): ").strip()
 
+        # 3. Invalid amount ko friendly message ke saath skip karo
         try:
             amount = int(amount_input)
 
             if amount <= 0:
                 raise ValueError
 
-            return amount
-
         except ValueError:
-            print("Invalid amount. Please enter a positive number.")
-
-
-def main():
-    # Purane saved expenses load karo
-    expenses = load_expenses()
-
-    print("EXPENSE TRACKER")
-    print(f"Previously saved expenses: {len(expenses)}")
-
-    # 3 naye expenses lo
-    for i in range(1, 4):
-        print(f"\nEnter expense {i}")
-
-        item = get_item_name()
-        amount = get_valid_amount()
+            print("Invalid amount. This expense will be skipped.")
+            continue
 
         expenses.append((item, amount))
         print("Expense added successfully!")
 
-    # Purane + naye, sab save karo
+    # 4. Poori list (purani + nayi) save karo
     save_expenses(expenses)
 
-    # Report dikhao
+    # 5. Total aur biggest expense print karo
     print("\nEXPENSE REPORT")
     print(f"Total expenses: ₹{total_spent(expenses)}")
 
