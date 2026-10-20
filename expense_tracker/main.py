@@ -3,52 +3,47 @@ from reports import total_spent, biggest_expense
 
 
 def main():
-    # 1. Purane expenses file se load karo
     expenses = load_expenses()
 
-    print("EXPENSE TRACKER")
-    print(f"Previously saved expenses: {len(expenses)}")
+    print("===== EXPENSE TRACKER =====")
 
-    # 2. User se 3 naye items aur amounts lo
-    for i in range(1, 4):
-        print(f"\nEnter expense {i}")
-
-        item = input("Enter item name: ").strip()
-        amount_input = input("Enter amount (₹): ").strip()
-
-        # 3. Invalid amount ko friendly message ke saath skip karo
+    for i in range(3):
         try:
-            amount = int(amount_input)
+            item = input("Enter expense item: ").strip()
+
+            if item == "":
+                print("Item cannot be empty.")
+                continue
+
+            amount = int(input("Enter amount: "))
 
             if amount <= 0:
-                raise ValueError
+                print("Amount must be greater than zero.")
+                continue
+
+            expenses.append((item, amount))
 
         except ValueError:
-            print("Invalid amount. This expense will be skipped.")
-            continue
+            print("Please enter a valid number.")
 
-        expenses.append((item, amount))
-        print("Expense added successfully!")
-
-    # 4. Poori list (purani + nayi) save karo
     save_expenses(expenses)
 
-    # 5. Total aur biggest expense print karo
-    print("\nEXPENSE REPORT")
-    print(f"Total expenses: ₹{total_spent(expenses)}")
-
-    biggest = biggest_expense(expenses)
-
-    if biggest is not None:
-        item, amount = biggest
-        print(f"Biggest expense: {item} — ₹{amount}")
-    else:
-        print("No expenses recorded yet.")
-
-    print("\nAll expenses:")
+    print("\n===== EXPENSE REPORT =====")
 
     for item, amount in expenses:
         print(f"{item}: ₹{amount}")
+
+    print(f"\nTotal spent: ₹{total_spent(expenses)}")
+
+    biggest = biggest_expense(expenses)
+
+    if biggest:
+        print(
+            f"Biggest expense: {biggest[0]} "
+            f"- ₹{biggest[1]}"
+        )
+    else:
+        print("No expenses found.")
 
 
 if __name__ == "__main__":
